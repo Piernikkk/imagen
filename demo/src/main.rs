@@ -3,6 +3,8 @@ use std::path::Path;
 use color_eyre::eyre::{Ok, Result};
 use imagen::{Canvas, Rgba};
 
+const FONT: &[u8] = include_bytes!("../fonts/Poppins-Regular.ttf");
+
 fn main() -> Result<()> {
     color_eyre::install()?;
 
@@ -109,7 +111,8 @@ fn generate_circle() -> Result<()> {
 
     canvas
         .draw_filled_circle(150, 100, 80, (200, 200, 30).into())
-        .draw_rounded_stroke_rect(10, 10, 30, 30, 5, 5, (200, 200, 30).into());
+        .draw_rounded_stroke_rect(10, 10, 30, 30, 5, 5, (200, 200, 30).into())
+        .draw_text("TEST", 50, 50, FONT, 96.0, (255, 255, 255).into())?;
 
     canvas.save(Path::new("circle.png").to_path_buf(), imagen::Codecs::PNG)?;
 
@@ -132,13 +135,11 @@ fn generate_stroke_circle() -> Result<()> {
 fn generate_filled_stroke_circle() -> Result<()> {
     let mut canvas = Canvas::new(200, 200);
 
-    let font = include_bytes!("../fonts/Poppins-Regular.ttf");
-
     canvas
         .draw_stroke_circle(150, 100, 80, 10, (200, 200, 30).into())?
         .fill((0, 255, 0).into())
         .to_canvas()
-        .draw_text("testasfdasfasf", 50, 50, font, 48.0, (0, 0, 0).into())?;
+        .draw_text("testasfdasfasf", 50, 50, FONT, 48.0, (0, 0, 0).into())?;
 
     canvas.save(
         Path::new("filled_circle.png").to_path_buf(),
