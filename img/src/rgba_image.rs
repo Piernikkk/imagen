@@ -1,6 +1,6 @@
 use crate::rgba::Rgba;
-use color_eyre::eyre::{Ok, Result, eyre};
 
+#[derive(Debug, Clone)]
 pub struct RgbaImage {
     pub width: u32,
     pub height: u32,
@@ -17,15 +17,9 @@ impl RgbaImage {
         }
     }
 
-    pub fn set_pixel(&mut self, x: u32, y: u32, pixel: Rgba) -> Result<()> {
-        if x >= self.width || y >= self.height {
-            return Err(eyre!("X or Y is not in image bounds"));
-        }
-
+    pub fn set_pixel(&mut self, x: u32, y: u32, color: Rgba) {
         let index = (y * self.width + x) as usize;
-        self.data[index] = pixel;
-
-        Ok(())
+        self.data[index] = color;
     }
 
     pub fn to_u8_vec(&self) -> Vec<u8> {
