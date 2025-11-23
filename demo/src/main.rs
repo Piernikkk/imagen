@@ -138,7 +138,7 @@ fn generate_filled_stroke_circle() -> Result<()> {
         .draw_stroke_circle(150, 100, 80, 10, (200, 200, 30).into())?
         .fill((0, 255, 0).into())
         .to_canvas()
-        .draw_text("test", 50, 50, font, 24.0, (0, 0, 0).into())?;
+        .draw_text("testasfdasfasf", 50, 50, font, 48.0, (0, 0, 0).into())?;
 
     canvas.save(
         Path::new("filled_circle.png").to_path_buf(),

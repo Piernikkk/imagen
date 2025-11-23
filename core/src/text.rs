@@ -67,13 +67,24 @@ fn blend_colors(bg: Rgba, fg: Rgba) -> Rgba {
         return bg;
     }
 
-    let alpha = fg.a as f32 / 255.0;
-    let inv_alpha = 1.0 - alpha;
+    let fg_alpha = fg.a as f32 / 255.0;
+    let bg_alpha = bg.a as f32 / 255.0;
+
+    let alpha = fg_alpha + bg_alpha * (1.0 - fg_alpha);
+
+    if alpha == 0.0 {
+        return Rgba {
+            r: 0,
+            g: 0,
+            b: 0,
+            a: 0,
+        };
+    }
 
     Rgba {
-        r: (fg.r as f32 * alpha + bg.r as f32 * inv_alpha) as u8,
-        g: (fg.g as f32 * alpha + bg.g as f32 * inv_alpha) as u8,
-        b: (fg.b as f32 * alpha + bg.g as f32 * inv_alpha) as u8,
-        a: bg.a.max(fg.a),
+        r: ((fg.r as f32 * fg_alpha + bg.r as f32 * bg_alpha * (1.0 - fg_alpha)) / alpha) as u8,
+        g: ((fg.g as f32 * fg_alpha + bg.g as f32 * bg_alpha * (1.0 - fg_alpha)) / alpha) as u8,
+        b: ((fg.b as f32 * fg_alpha + bg.b as f32 * bg_alpha * (1.0 - fg_alpha)) / alpha) as u8,
+        a: (alpha * 255.0) as u8,
     }
 }
