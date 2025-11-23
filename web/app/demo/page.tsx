@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import { IconPlus } from "@tabler/icons-react";
 import { useState } from "react";
@@ -17,7 +18,7 @@ export default function Page() {
         <p className="text-lg font-semibold">Elements:</p>
         <div>
           {elements.map((e, i) => (
-            <div>test</div>
+            <div key={i}>test</div>
           ))}
         </div>
       </div>
