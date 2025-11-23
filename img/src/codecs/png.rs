@@ -72,8 +72,8 @@ pub fn idat_chunk(image: &RgbaImage) -> Result<Vec<u8>> {
     for y in 0..image.height {
         raw_data.push(0);
 
-        let row_start = (y * image.width) as usize;
-        let row_end = (row_start + image.width as usize) as usize;
+        let row_start = (y * image.width * 4) as usize;
+        let row_end = (row_start + (image.width * 4) as usize) as usize;
         raw_data.extend_from_slice(&image.to_u8_vec()[row_start..row_end]);
     }
 

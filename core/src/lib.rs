@@ -1,6 +1,9 @@
+use std::fs;
+use std::path::{Path, PathBuf};
+
 use color_eyre::eyre::Result;
 
-use img::{
+pub use img::{
     codecs::{Codecs, save_png},
     rgba::Rgba,
     rgba_image::RgbaImage,
@@ -21,9 +24,15 @@ impl Canvas {
         self.image.set_pixel(x, y, color)
     }
 
-    pub fn save(&self, path: &str, codec: Codecs) -> Result<()> {
+    pub fn save(&self, path: PathBuf, codec: Codecs) -> Result<()> {
+        let full_path = Path::new("output").join(path);
+
+        if let Some(parent) = full_path.parent() {
+            fs::create_dir_all(parent)?;
+        }
+
         match codec {
-            Codecs::PNG => save_png(path, &self.image),
+            Codecs::PNG => save_png(full_path, &self.image),
         }
     }
 }
