@@ -109,9 +109,6 @@ pub enum DrawCommand {
         font_size: f32,
         /// Text color
         color: Color,
-        /// Optional font name (currently unused, defaults to Roboto-Regular)
-        #[serde(default)]
-        font: Option<String>,
     },
     /// Draw a single pixel
     #[schema(title = "Pixel")]

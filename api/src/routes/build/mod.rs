@@ -148,11 +148,8 @@ async fn generate_image(Json(request): Json<ImageRequest>) -> AxumResult<impl In
                 y,
                 font_size,
                 color,
-                font: _,
             } => {
-                canvas
-                    .draw_text(&text, x, y, DEFAULT_FONT, font_size, color.into())
-                    .map_err(|e| AxumError::bad_request(eyre!("Failed to draw text: {}", e)))?;
+                canvas.draw_text(&text, x, y, DEFAULT_FONT, font_size, color.into())?;
             }
             DrawCommand::Pixel { x, y, color } => {
                 canvas

@@ -1,10 +1,11 @@
-import CommandDialog from "@/components/CommandDialog";
+import CommandDialog from "@/components/CommandDialog/index";
 import { DialogComponents, DialogDefinition } from "./types";
+import { Commands } from "../providers/types";
 
 export type Dialogs = {
   Command: DialogDefinition<{
     payload: undefined;
-    returnValue: undefined;
+    returnValue: Commands;
   }>;
 };
 

@@ -277,8 +277,6 @@ export interface components {
         } | {
             /** @description Text color */
             color: components["schemas"]["Color"];
-            /** @description Optional font name (currently unused, defaults to Roboto-Regular) */
-            font?: string | null;
             /**
              * Format: float
              * @description Font size in pixels
