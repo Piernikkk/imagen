@@ -132,10 +132,13 @@ fn generate_stroke_circle() -> Result<()> {
 fn generate_filled_stroke_circle() -> Result<()> {
     let mut canvas = Canvas::new(200, 200);
 
+    let font = include_bytes!("../fonts/Poppins-Regular.ttf");
+
     canvas
         .draw_stroke_circle(150, 100, 80, 10, (200, 200, 30).into())?
         .fill((0, 255, 0).into())
-        .to_canvas();
+        .to_canvas()
+        .draw_text("test", 50, 50, font, 24.0, (0, 0, 0).into())?;
 
     canvas.save(
         Path::new("filled_circle.png").to_path_buf(),

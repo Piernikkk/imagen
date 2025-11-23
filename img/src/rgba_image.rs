@@ -22,6 +22,11 @@ impl RgbaImage {
         self.data[index] = color;
     }
 
+    pub fn get_pixel(&mut self, x: u32, y: u32) -> Rgba {
+        let index = (y * self.width + x) as usize;
+        self.data[index]
+    }
+
     pub fn to_u8_vec(&self) -> Vec<u8> {
         self.data.iter().flat_map(|d| d.to_array()).collect()
     }

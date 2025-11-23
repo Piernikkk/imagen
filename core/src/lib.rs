@@ -1,6 +1,7 @@
 pub mod arc;
 pub mod circle;
 pub mod rect;
+pub mod text;
 
 use color_eyre::eyre::{Ok, Result, eyre};
 use std::fs;
@@ -38,7 +39,7 @@ impl Canvas {
 
     pub fn draw_pixel(&mut self, x: u32, y: u32, color: Rgba) -> Result<&mut Self> {
         if x >= self.image.width || y >= self.image.height {
-            return Err(eyre!("X or Y is not in image bounds"));
+            return Err(eyre!("X or Y is not in the image bounds"));
         }
 
         self.image.set_pixel(x, y, color);
