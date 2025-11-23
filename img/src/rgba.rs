@@ -15,3 +15,15 @@ impl Rgba {
         [self.r, self.g, self.b, self.a]
     }
 }
+
+impl From<(u8, u8, u8, u8)> for Rgba {
+    fn from((r, g, b, a): (u8, u8, u8, u8)) -> Self {
+        Self::new(r, g, b, a)
+    }
+}
+
+impl From<(u8, u8, u8)> for Rgba {
+    fn from((r, g, b): (u8, u8, u8)) -> Self {
+        Self::new(r, g, b, 255)
+    }
+}
