@@ -1,6 +1,7 @@
+mod axum_error;
 mod init;
-pub mod routes;
-pub mod state;
+mod routes;
+mod state;
 
 use color_eyre::eyre::{Context, Result};
 use tracing::info;
@@ -12,6 +13,7 @@ use crate::{
 };
 
 #[derive(OpenApi)]
+#[openapi(components(schemas(routes::build::types::DrawCommand, routes::build::types::Color)))]
 struct ApiDoc;
 
 #[tokio::main]

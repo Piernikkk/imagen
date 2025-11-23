@@ -62,6 +62,7 @@ dependencies = [
  "dotenvy",
  "http",
  "http-serde-ext",
+ "imagen",
  "serde",
  "serde_json",
  "tokio",
