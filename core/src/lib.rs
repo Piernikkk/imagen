@@ -75,6 +75,6 @@ impl Canvas {
         self.draw_filled_rect(x, y, thickness, height, color);
         self.draw_filled_rect(x + width - thickness, y, thickness, height, color);
 
-        Ok(StrokeRect::new(self.clone(), thickness))
+        Ok(StrokeRect::new(self, thickness, x, y, width, height))
     }
 }

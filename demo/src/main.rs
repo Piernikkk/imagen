@@ -9,8 +9,9 @@ fn main() -> Result<()> {
     println!("Hello, world!");
 
     generate_test_image()?;
-    generate_rects()?;
+    generate_rect()?;
     generate_stroke_rect()?;
+    generate_filled_rect()?;
 
     Ok(())
 }
@@ -34,7 +35,7 @@ fn generate_test_image() -> Result<()> {
     Ok(())
 }
 
-fn generate_rects() -> Result<()> {
+fn generate_rect() -> Result<()> {
     let mut canvas = Canvas::new(100, 100);
 
     canvas.draw_filled_rect(20, 10, 50, 50, (200, 200, 30).into());
@@ -51,6 +52,21 @@ fn generate_stroke_rect() -> Result<()> {
 
     canvas.save(
         Path::new("stroke_rect.png").to_path_buf(),
+        imagen::Codecs::PNG,
+    )?;
+
+    Ok(())
+}
+
+fn generate_filled_rect() -> Result<()> {
+    let mut canvas = Canvas::new(100, 100);
+
+    canvas
+        .draw_stroke_rect(20, 10, 50, 50, 10, (200, 200, 30).into())?
+        .fill((200, 30, 200).into());
+
+    canvas.save(
+        Path::new("filled_rect.png").to_path_buf(),
         imagen::Codecs::PNG,
     )?;
 
