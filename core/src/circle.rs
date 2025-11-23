@@ -20,8 +20,14 @@ impl<'a> StrokeCircle<'a> {
         }
     }
 
-    pub fn fill(&mut self, color: Rgba) {
+    pub fn fill(&mut self, color: Rgba) -> &mut Self {
         self.canvas
             .draw_filled_circle(self.cx, self.cy, self.radius - self.thickness, color);
+
+        self
+    }
+
+    pub fn to_canvas(&mut self) -> &mut Canvas {
+        self.canvas
     }
 }

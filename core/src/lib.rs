@@ -38,17 +38,24 @@ impl Canvas {
         }
     }
 
-    pub fn draw_pixel(&mut self, x: u32, y: u32, color: Rgba) -> Result<()> {
+    pub fn draw_pixel(&mut self, x: u32, y: u32, color: Rgba) -> Result<&mut Self> {
         if x >= self.image.width || y >= self.image.height {
             return Err(eyre!("X or Y is not in image bounds"));
         }
 
         self.image.set_pixel(x, y, color);
 
-        Ok(())
+        Ok(self)
     }
 
-    pub fn draw_filled_rect(&mut self, x: u32, y: u32, width: u32, height: u32, color: Rgba) {
+    pub fn draw_filled_rect(
+        &mut self,
+        x: u32,
+        y: u32,
+        width: u32,
+        height: u32,
+        color: Rgba,
+    ) -> &mut Self {
         let x_end = (x + width).min(self.image.width);
         let y_end = (y + height).min(self.image.height);
 
@@ -57,6 +64,7 @@ impl Canvas {
                 self.image.set_pixel(px, py, color);
             }
         }
+        self
     }
 
     pub fn draw_stroke_rect(
@@ -88,7 +96,7 @@ impl Canvas {
         height: u32,
         radius: u32,
         color: Rgba,
-    ) {
+    ) -> &mut Self {
         let radius = radius.min(width / 2).min(height / 2);
 
         self.draw_filled_rect(x + radius, y, width - 2 * radius, height, color);
@@ -102,7 +110,6 @@ impl Canvas {
             color,
         );
 
-        // Draw rounded corners using filled arcs (quarter circles)
         self.draw_filled_arc(x + radius, y + radius, radius, color, 180, 270);
         self.draw_filled_arc(x + width - radius - 1, y + radius, radius, color, 270, 360);
         self.draw_filled_arc(x + radius, y + height - radius - 1, radius, color, 90, 180);
@@ -114,6 +121,8 @@ impl Canvas {
             0,
             90,
         );
+
+        self
     }
 
     pub fn draw_rounded_stroke_rect(
@@ -125,7 +134,7 @@ impl Canvas {
         thickness: u32,
         radius: u32,
         color: Rgba,
-    ) {
+    ) -> &mut Self {
         let radius = radius.min(width / 2).min(height / 2);
 
         if radius * 2 < width {
@@ -178,9 +187,11 @@ impl Canvas {
             0,
             90,
         );
+
+        self
     }
 
-    pub fn draw_filled_circle(&mut self, cx: u32, cy: u32, radius: u32, color: Rgba) {
+    pub fn draw_filled_circle(&mut self, cx: u32, cy: u32, radius: u32, color: Rgba) -> &mut Self {
         let r_sq = (radius * radius) as i32;
 
         for dy in -(radius as i32)..=(radius as i32) {
@@ -195,6 +206,7 @@ impl Canvas {
                 }
             }
         }
+        self
     }
 
     pub fn draw_stroke_circle(
@@ -238,7 +250,7 @@ impl Canvas {
         color: Rgba,
         start_angle: u32,
         end_angle: u32,
-    ) {
+    ) -> &mut Self {
         let r_sq = (radius * radius) as i32;
 
         for dy in -(radius as i32)..=(radius as i32) {
@@ -264,6 +276,8 @@ impl Canvas {
                 }
             }
         }
+
+        self
     }
 
     fn draw_stroke_arc(
@@ -275,7 +289,7 @@ impl Canvas {
         color: Rgba,
         start_angle: u32,
         end_angle: u32,
-    ) {
+    ) -> &mut Self {
         let outer_r_sq = (radius * radius) as i32;
         let inner_radius = radius.saturating_sub(thickness);
         let inner_r_sq = (inner_radius * inner_radius) as i32;
@@ -303,5 +317,7 @@ impl Canvas {
                 }
             }
         }
+
+        self
     }
 }

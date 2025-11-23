@@ -107,7 +107,9 @@ fn generate_rounded_stroke_rect() -> Result<()> {
 fn generate_circle() -> Result<()> {
     let mut canvas = Canvas::new(200, 200);
 
-    canvas.draw_filled_circle(150, 100, 80, (200, 200, 30).into());
+    canvas
+        .draw_filled_circle(150, 100, 80, (200, 200, 30).into())
+        .draw_rounded_stroke_rect(10, 10, 30, 30, 5, 5, (200, 200, 30).into());
 
     canvas.save(Path::new("circle.png").to_path_buf(), imagen::Codecs::PNG)?;
 
@@ -132,7 +134,8 @@ fn generate_filled_stroke_circle() -> Result<()> {
 
     canvas
         .draw_stroke_circle(150, 100, 80, 10, (200, 200, 30).into())?
-        .fill((0, 255, 0).into());
+        .fill((0, 255, 0).into())
+        .to_canvas();
 
     canvas.save(
         Path::new("filled_circle.png").to_path_buf(),

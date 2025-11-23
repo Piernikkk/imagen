@@ -39,4 +39,8 @@ impl<'a> StrokeRect<'a> {
             color,
         );
     }
+
+    pub fn to_canvas(&mut self) -> &mut Canvas {
+        self.canvas
+    }
 }
