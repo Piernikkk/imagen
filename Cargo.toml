@@ -1,6 +1,8 @@
 [workspace]
 resolver = "2"
-members = ["api",
-    "core", "demo",
+members = [
+    "api",
+    "core",
+    "demo",
     "img"
 ]

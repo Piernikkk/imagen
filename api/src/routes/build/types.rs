@@ -152,3 +152,34 @@ impl From<Color> for Rgba {
         }
     }
 }
+
+#[derive(Debug, Clone, Serialize, Deserialize, ToSchema)]
+pub struct CommandTypeInfo {
+    /// The command type identifier
+    pub value: String,
+    /// Human-readable label for the command
+    pub label: String,
+    /// Description of what this command does
+    pub description: String,
+    /// List of required fields for this command
+    pub fields: Vec<String>,
+}
+
+impl DrawCommand {
+    /// Get metadata for all available command types
+    pub fn get_all_types() -> Vec<CommandTypeInfo> {
+        use crate::command_types;
+        use crate::macros::{to_snake_case, to_title_case};
+
+        command_types! {
+            FilledRect => "Draw a filled rectangle" { x, y, width, height, color },
+            StrokeRect => "Draw a rectangle outline" { x, y, width, height, thickness, color },
+            RoundedFilledRect => "Draw a filled rectangle with rounded corners" { x, y, width, height, radius, color },
+            RoundedStrokeRect => "Draw a rounded rectangle outline" { x, y, width, height, thickness, radius, color },
+            FilledCircle => "Draw a filled circle" { cx, cy, radius, color },
+            StrokeCircle => "Draw a circle outline" { cx, cy, radius, thickness, color },
+            Text => "Draw text" { text, x, y, font_size, color },
+            Pixel => "Draw a single pixel" { x, y, color }
+        }
+    }
+}

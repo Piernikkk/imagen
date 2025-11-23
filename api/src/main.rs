@@ -1,5 +1,6 @@
 mod axum_error;
 mod init;
+mod macros;
 mod routes;
 mod state;
 

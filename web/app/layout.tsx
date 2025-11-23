@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Poppins } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
+import Query from "@/lib/providers/QueryClient";
+import { DialogManager } from "@/lib/DialogManager";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,15 +32,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} ${poppins.variable} antialiased`}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <div className="relative h-screen w-screen overflow-hidden flex flex-col">
-            {children}
-          </div>
-        </ThemeProvider>
-      </body>
-    </html>
+    <Query>
+      <html lang="en" suppressHydrationWarning>
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} ${poppins.variable} antialiased`}>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            <DialogManager>
+              <div className="relative h-screen w-screen overflow-hidden flex flex-col">
+                {children}
+              </div>
+            </DialogManager>
+          </ThemeProvider>
+        </body>
+      </html>
+    </Query>
   );
 }

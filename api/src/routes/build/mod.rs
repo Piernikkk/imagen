@@ -37,14 +37,14 @@ pub struct ImageRequest {
 /// Returns the generated image as a PNG.
 #[utoipa::path(
     post,
-    path = "",
+    path = "/",
     request_body = ImageRequest,
     responses(
         (status = 200, description = "Image generated successfully", content_type = "image/png"),
         (status = 400, description = "Invalid request"),
         (status = 500, description = "Internal server error")
     ),
-    tag = "imagen"
+    tag = "images"
 )]
 async fn generate_image(Json(request): Json<ImageRequest>) -> AxumResult<impl IntoResponse> {
     if request.width == 0 || request.height == 0 {
