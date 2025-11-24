@@ -8,7 +8,7 @@ use std::fs;
 use std::path::{Path, PathBuf};
 
 pub use img::{
-    codecs::{Codecs, save_png},
+    codecs::{Codecs, encode_to_png, save_png},
     rgba::Rgba,
     rgba_image::RgbaImage,
 };

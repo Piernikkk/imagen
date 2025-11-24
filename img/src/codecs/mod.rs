@@ -4,7 +4,7 @@ use std::{fs::write, path::PathBuf};
 
 use color_eyre::eyre::{Result, eyre};
 
-use crate::{codecs::png::encode_to_png, rgba_image::RgbaImage};
+pub use crate::{codecs::png::encode_to_png, rgba_image::RgbaImage};
 
 pub enum Codecs {
     PNG,

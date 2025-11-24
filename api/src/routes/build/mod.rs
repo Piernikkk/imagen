@@ -1,16 +1,16 @@
 pub mod types;
 
 use axum::{
-    Json,
-    http::{StatusCode, header},
+    http::{header, StatusCode},
     response::IntoResponse,
+    Json,
 };
 use color_eyre::eyre::eyre;
 use serde::{Deserialize, Serialize};
 use utoipa::ToSchema;
 use utoipa_axum::{router::OpenApiRouter, routes};
 
-use imagen::Canvas;
+use imagen::{encode_to_png, Canvas};
 
 use crate::{
     axum_error::{AxumError, AxumResult},
@@ -169,23 +169,8 @@ async fn generate_image(Json(request): Json<ImageRequest>) -> AxumResult<impl In
 }
 
 fn canvas_to_png_bytes(canvas: &Canvas) -> AxumResult<Vec<u8>> {
-    use std::fs;
-    use std::path::PathBuf;
-
-    let temp_path = PathBuf::from(format!(
-        "/tmp/imagen_{}.png",
-        std::time::SystemTime::now()
-            .duration_since(std::time::UNIX_EPOCH)
-            .unwrap()
-            .as_nanos()
-    ));
-
-    imagen::save_png(temp_path.clone(), &canvas.image)?;
-
-    let bytes =
-        fs::read(&temp_path).map_err(|e| AxumError::new(eyre!("Failed to read PNG: {}", e)))?;
-
-    let _ = fs::remove_file(temp_path);
+    let bytes = encode_to_png(&canvas.image)
+        .map_err(|e| AxumError::new(eyre!("Failed to encode PNG: {}", e)))?;
 
     Ok(bytes)
 }
