@@ -1,11 +1,11 @@
 [package]
 name = "api"
 version = "0.1.0"
-edition = "2024"
+edition = "2021"
 
 [dependencies]
 axum = { version = "0.8.6", features = ["macros", "ws"] }
-axum-oidc = { git = "https://github.com/pfzetto/axum-oidc.git", branch = "pfzetto" }
+
 color-eyre = "0.6.5"
 imagen = { path = "../core" }
 dotenvy = "0.15.7"

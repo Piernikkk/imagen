@@ -1,0 +1,37 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: api/Dockerfile
+      args:
+        PROJECT_NAME: api
+        BUILDPLATFORM: linux/amd64
+    restart: unless-stopped
+    networks:
+      - default
+      - proxy
+    labels:
+      traefik.enable: true
+      traefik.port: 4000
+      traefik.http.routers.imagen-api.rule: "Host(`imagen.piernik.rocks`) && (PathPrefix(`/api`) || PathPrefix(`/socket.io`) || PathPrefix(`/docs`))"
+      traefik.http.services.imagen-api.loadbalancer.server.port: 4000
+  web:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    depends_on:
+      - api
+    restart: unless-stopped
+    networks:
+      - default
+      - proxy
+    labels:
+      traefik.enable: true
+      traefik.port: 3000
+      traefik.http.services.imagen-web.loadbalancer.server.port: "3000"
+      traefik.http.routers.imagen-web.rule: "Host(`imagen.piernik.rocks`)"
+networks:
+  proxy:
+    name: proxy-network
+    external: true
+  default:
